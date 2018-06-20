@@ -9,11 +9,16 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    let data = ["donkey","horse","queen","pawnsacrifice","jazz"]
+    var Manager:NetWorkManger!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.Manager = NetWorkManger()
+        self.view.backgroundColor = UIColor.white;
     }
+  
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
