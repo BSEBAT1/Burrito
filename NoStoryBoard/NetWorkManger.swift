@@ -7,11 +7,12 @@
 //
 
 import UIKit
-import SwiftyJSON
+
 
 class NetWorkManger: NSObject,LocationServices {
     
      var LocationManager:LocationManagerProcess!
+     weak var Delegate:NetWorkManagerProtocol?
     
     override init() {
         super.init()
@@ -21,12 +22,12 @@ class NetWorkManger: NSObject,LocationServices {
     
     
     func NewLocation(lat: Double, long: Double) {
-        
+        URLSession.shared.invalidateAndCancel()
         GooglePlacesOperation(lat: lat, long: long)
     }
     
     func ErrorEncountered(ErrorType: String) {
-        
+        ReportError(Error: ErrorType)
     }
     
     func GooglePlacesOperation(lat:Double,long:Double){
@@ -55,19 +56,24 @@ class NetWorkManger: NSObject,LocationServices {
                 return
             }
             do {
-            
-                guard let dataDictionary:[String : Any] = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
-                    
-                    else{
-                    self.ReportError(Error:"Error Parsing JSON")
-                    return
+            let json = try JSON(data: data)
+                var ObjectCollection:NSMutableArray = NSMutableArray()
+                if let subarray = json["results"].array{
+                    for obj in subarray{
+                        let value = obj["price_level"].intValue
+                        let lati = obj["geometry"]["location"]["lat"].doubleValue
+                        let langi = obj["geometry"]["location"]["lng"].doubleValue
+                        let name = obj["name"].stringValue
+                        let adress = obj["vicinity"].stringValue
+                        let Restaurant:Restaurants = Restaurants(latitude: lati, longitude: langi, PriceLevel: value, Name: name, Address: adress)
+                        ObjectCollection.add(Restaurant)
+                    }
+                    self.UpdateUi(locations: ObjectCollection)
                 }
                 
-            
             }
-            catch let JsonError {
-                self.ReportError(Error: JsonError.localizedDescription)
-                
+            catch let error{
+                self.ReportError(Error:error.localizedDescription)
             }
             
             
@@ -78,7 +84,11 @@ class NetWorkManger: NSObject,LocationServices {
     }
     
     func ReportError(Error:String){
-        
+        Delegate?.DisplayError(ErrorType: Error)
+    }
+    
+    func UpdateUi(locations:NSMutableArray){
+        Delegate?.NewLocations(Locations: locations)
     }
     
 }
