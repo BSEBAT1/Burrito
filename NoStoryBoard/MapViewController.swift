@@ -18,7 +18,6 @@ class MapViewController: UIViewController {
         let camera = GMSCameraPosition.camera(withLatitude:SelectedRestaurant.latitude, longitude:SelectedRestaurant.longitude, zoom: 15.0)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         self.view.backgroundColor=UIColor.white
-      
         let marker = GMSMarker()
         let markerImage = UIImage(named: "Pin")!
         let markerView = UIImageView(image: markerImage)
@@ -56,7 +55,7 @@ class MapViewController: UIViewController {
         
         let vertical = NSLayoutConstraint.constraints(withVisualFormat:"H:|-0-[header]-0-|" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
           let vertical2 = NSLayoutConstraint.constraints(withVisualFormat:"H:|[map]|" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
-        let horizantal = NSLayoutConstraint.constraints(withVisualFormat:"V:|-2-[header(150@750)]-0-[map]-0-|" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
+        let horizantal = NSLayoutConstraint.constraints(withVisualFormat:"V:|-100-[header(150@750)]-0-[map]-0-|" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
         self.view.addConstraints(horizantal)
         self.view.addConstraints(vertical)
         self.view.addConstraints(vertical2)

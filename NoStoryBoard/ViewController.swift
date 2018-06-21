@@ -19,6 +19,8 @@ class ViewController: UIViewController,NetWorkManagerProtocol,UITableViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    self.title = "Burrito Places"
+        
         let LoadingBurrito:Restaurants = Restaurants(latitude:0, longitude:0, PriceLevel:0, Name:"Loading", Address: "Loading Restaurants")
         RestaurantList.add(LoadingBurrito)
         
@@ -126,10 +128,10 @@ class ViewController: UIViewController,NetWorkManagerProtocol,UITableViewDelegat
         print("You tapped cell number \(indexPath.section).")
         
         let Restaurant:Restaurants = RestaurantList[indexPath.section] as! Restaurants;
-        let MapView:MapViewController = MapViewController()
-        MapView.SelectedRestaurant = Restaurant
-        self.navigationController?.present(MapView, animated:false, completion: {
-        })
+        let MapViewd:MapViewController = MapViewController()
+        MapViewd.SelectedRestaurant = Restaurant
+        MapViewd.title=Restaurant.Name
+        self.navigationController?.pushViewController(MapViewd, animated:false)
     }
 }
 
