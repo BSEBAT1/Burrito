@@ -30,7 +30,7 @@ class NetWorkManger: NSObject,LocationServices {
         ReportError(Error: ErrorType)
     }
     
-    func GooglePlacesOperation(lat:Double,long:Double){
+   func GooglePlacesOperation(lat:Double,long:Double){
       
         
     let Json = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\(lat),\(long)&radius=1500&type=restaurant&keyword=burrito&key=AIzaSyCrEWb1Hsk1hNj_rLsUF_ML6Z-_4fy4yfo"
@@ -83,11 +83,11 @@ class NetWorkManger: NSObject,LocationServices {
         
     }
     
-    func ReportError(Error:String){
+   internal func ReportError(Error:String){
         Delegate?.DisplayError(ErrorType: Error)
     }
     
-    func UpdateUi(locations:NSMutableArray){
+  internal func UpdateUi(locations:NSMutableArray){
         Delegate?.NewLocations(Locations: locations)
     }
     

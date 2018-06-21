@@ -20,7 +20,6 @@ class ViewController: UIViewController,NetWorkManagerProtocol,UITableViewDelegat
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     self.title = "Burrito Places"
-        
         let LoadingBurrito:Restaurants = Restaurants(latitude:0, longitude:0, PriceLevel:0, Name:"Loading", Address: "Loading Restaurants")
         RestaurantList.add(LoadingBurrito)
         
@@ -61,7 +60,9 @@ class ViewController: UIViewController,NetWorkManagerProtocol,UITableViewDelegat
     }
     
     func DisplayError(ErrorType: String) {
-        
+        let alert = UIAlertController(title: "Alert", message:ErrorType, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Table View delegate methods

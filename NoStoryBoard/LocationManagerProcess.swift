@@ -13,7 +13,7 @@ import MapKit
 
 class LocationManagerProcess: NSObject,CLLocationManagerDelegate{
    
-     var locationManager: CLLocationManager = CLLocationManager()
+   private var locationManager: CLLocationManager = CLLocationManager()
     weak var Delegate:LocationServices?
     
     override init() {
@@ -33,6 +33,7 @@ class LocationManagerProcess: NSObject,CLLocationManagerDelegate{
             case .restricted, .denied:
                 // Disable location features
                self.locationManager.stopUpdatingLocation()
+               Delegate?.ErrorEncountered(ErrorType:"Please Enable Locations")
                 break
                 
             case .authorizedWhenInUse, .authorizedAlways:
@@ -44,12 +45,13 @@ class LocationManagerProcess: NSObject,CLLocationManagerDelegate{
         }
     
     
-    func locationManager(_ manager: CLLocationManager,
+   func locationManager(_ manager: CLLocationManager,
                          didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
     case .restricted, .denied:
         // Disable your app's location features
         self.locationManager.stopUpdatingLocation()
+        Delegate?.ErrorEncountered(ErrorType:"Please Enable Locations")
         break
         
     case .authorizedWhenInUse, .authorizedAlways:
@@ -64,7 +66,7 @@ class LocationManagerProcess: NSObject,CLLocationManagerDelegate{
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+ func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let userLocation:CLLocation = locations[0] as CLLocation
         print(userLocation.coordinate.latitude,userLocation.coordinate.longitude)
@@ -72,13 +74,10 @@ class LocationManagerProcess: NSObject,CLLocationManagerDelegate{
         self.locationManager.stopUpdatingLocation();
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+   func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         Delegate?.ErrorEncountered(ErrorType: error.localizedDescription)
     }
     
-    deinit {
-      print("we are gone")
-    }
     
 }
 
