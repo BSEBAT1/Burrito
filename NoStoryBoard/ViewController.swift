@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 
 class ViewController: UIViewController,NetWorkManagerProtocol,UITableViewDelegate,UITableViewDataSource {
     
@@ -125,15 +126,12 @@ class ViewController: UIViewController,NetWorkManagerProtocol,UITableViewDelegat
         print("You tapped cell number \(indexPath.section).")
         
         let Restaurant:Restaurants = RestaurantList[indexPath.section] as! Restaurants;
-        
-        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(Restaurant.latitude!)&zoom=14&views=traffic&q=\(Restaurant.latitude!),\(Restaurant.longitude)")!, options: [:], completionHandler: nil)
-        } else {
-            print("Can't use comgooglemaps://")
-        }
+        let MapView:MapViewController = MapViewController()
+        MapView.SelectedRestaurant = Restaurant
+        navigationController?.present(MapView, animated:false, completion: {
+        })
     }
-    }
-
+}
 
 
 
