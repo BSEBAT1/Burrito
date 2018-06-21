@@ -28,7 +28,12 @@ class PurpView: UIView {
         Price3.translatesAutoresizingMaskIntoConstraints=false
         Price4.translatesAutoresizingMaskIntoConstraints=false
         Name.font = UIFont(name: "Futura-Medium", size:20)
-        let image = UIImage.init(named:"cash")
+        Address.font = UIFont(name: "Futura-Medium", size:17)
+        Address.textColor=UIColor.white
+        Address.adjustsFontSizeToFitWidth=true
+        Address.numberOfLines=1
+        Address.textAlignment = .center
+        let image = UIImage.init(named:"cash2")
         Price1.image=image
         Price1.contentMode=UIViewContentMode.scaleAspectFit
         Price1.clipsToBounds=true
@@ -55,11 +60,11 @@ class PurpView: UIView {
         self.addSubview(Price4)
         
         let views:[String:AnyObject] = ["name":Name,"Address":Address,"price1":Price1,"price2":Price2,"price3":Price3,"price4":Price4]
-        let vertical = NSLayoutConstraint.constraints(withVisualFormat:"H:|-25-[name]" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
-        let horizantal = NSLayoutConstraint.constraints(withVisualFormat:"V:|-2-[name]-10-[Address]" , options:.alignAllLeading, metrics:nil, views:views)
-        let imageConstraints = NSLayoutConstraint.constraints(withVisualFormat:"V:[price1(15@1000)]-25-|" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
-        let imageConstraints2 = NSLayoutConstraint.constraints(withVisualFormat:"H:|-25-[price1(15@1000)]-[price2(15@1000)]-[price3(15@1000)]-[price4(15@1000)]" , options:NSLayoutFormatOptions.alignAllCenterY, metrics:nil, views:views)
-        
+        let vertical = NSLayoutConstraint.constraints(withVisualFormat:"H:|-2-[Address]-|" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
+        let horizantal = NSLayoutConstraint.constraints(withVisualFormat:"V:|-35-[Address(25@1000)]" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
+        let imageConstraints = NSLayoutConstraint.constraints(withVisualFormat:"V:[price1(35@1000)]-5-|" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
+        let imageConstraints2 = NSLayoutConstraint.constraints(withVisualFormat:"H:|-4-[price1(25@1000)]-[price2(25@1000)]-[price3(25@1000)]-[price4(25@1000)]-[name]" , options:NSLayoutFormatOptions.alignAllCenterY, metrics:nil, views:views)
+
         self.addConstraints(vertical)
         self.addConstraints(horizantal)
         self.addConstraints(imageConstraints2)

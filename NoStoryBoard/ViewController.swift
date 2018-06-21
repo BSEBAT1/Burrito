@@ -128,7 +128,7 @@ class ViewController: UIViewController,NetWorkManagerProtocol,UITableViewDelegat
         let Restaurant:Restaurants = RestaurantList[indexPath.section] as! Restaurants;
         let MapView:MapViewController = MapViewController()
         MapView.SelectedRestaurant = Restaurant
-        navigationController?.present(MapView, animated:false, completion: {
+        self.navigationController?.present(MapView, animated:false, completion: {
         })
     }
 }

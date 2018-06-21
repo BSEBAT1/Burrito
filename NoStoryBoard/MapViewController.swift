@@ -15,19 +15,19 @@ class MapViewController: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
+        let camera = GMSCameraPosition.camera(withLatitude:SelectedRestaurant.latitude, longitude:SelectedRestaurant.longitude, zoom: 15.0)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-        
-        
-        // Creates a marker in the center of the map.
+        self.view.backgroundColor=UIColor.white
+      
         let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-        marker.title = "Sydney"
-        marker.snippet = "Australia"
+        let markerImage = UIImage(named: "Pin")!
+        let markerView = UIImageView(image: markerImage)
+        marker.iconView = markerView
+        marker.position = CLLocationCoordinate2D(latitude:SelectedRestaurant.latitude, longitude: SelectedRestaurant.longitude)
         marker.map = mapView
         // Do any additional setup after loading the view.
         
-        var headtwo:PurpView = PurpView()
+        let headtwo:PurpView = PurpView()
         headtwo.Name.text=SelectedRestaurant.Name
         headtwo.Address.text=SelectedRestaurant.Address
         if SelectedRestaurant.PriceLevel==0 {
@@ -36,14 +36,17 @@ class MapViewController: UIViewController {
             headtwo.Price3.isHidden=true;
             headtwo.Price4.isHidden=true;
         } else if SelectedRestaurant.PriceLevel==1 {
+            headtwo.Price1.isHidden=true;
             headtwo.Price2.isHidden=true;
             headtwo.Price3.isHidden=true;
-            headtwo.Price4.isHidden=true;
+            headtwo.Price4.isHidden=false;
         } else if SelectedRestaurant.PriceLevel==2 {
-            headtwo.Price3.isHidden=true;
-            headtwo.Price4.isHidden=true;
+            headtwo.Price1.isHidden=true;
+            headtwo.Price2.isHidden=true;
         }  else if SelectedRestaurant.PriceLevel==3 {
-            headtwo.Price4.isHidden=true;
+            headtwo.Price1.isHidden=true;
+            headtwo.Price2.isHidden=true;
+            headtwo.Price3.isHidden=true;
         }
         headtwo.translatesAutoresizingMaskIntoConstraints=false
         mapView.translatesAutoresizingMaskIntoConstraints=false
@@ -51,10 +54,12 @@ class MapViewController: UIViewController {
         view.addSubview(mapView)
         let views:[String:AnyObject] = ["header":headtwo,"map":mapView]
         
-        let vertical = NSLayoutConstraint.constraints(withVisualFormat:"H:|[header][map]" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
-        let horizantal = NSLayoutConstraint.constraints(withVisualFormat:"V:|[header(50@1000)][map]" , options:.alignAllLeading, metrics:nil, views:views)
+        let vertical = NSLayoutConstraint.constraints(withVisualFormat:"H:|-0-[header]-0-|" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
+          let vertical2 = NSLayoutConstraint.constraints(withVisualFormat:"H:|[map]|" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
+        let horizantal = NSLayoutConstraint.constraints(withVisualFormat:"V:|-2-[header(150@750)]-0-[map]-0-|" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
         self.view.addConstraints(horizantal)
         self.view.addConstraints(vertical)
+        self.view.addConstraints(vertical2)
     }
 
     override func didReceiveMemoryWarning() {
