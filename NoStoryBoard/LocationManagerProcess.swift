@@ -66,7 +66,7 @@ class LocationManagerProcess: NSObject, CLLocationManagerDelegate {
             self.locationManager.requestWhenInUseAuthorization()
         }
     }
-
+    // MARK: Location Manager Delegate Methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
         let userLocation: CLLocation = locations[0] as CLLocation

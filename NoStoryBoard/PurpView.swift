@@ -34,7 +34,7 @@ class PurpView: UIView {
 
         let array: [UIImageView] = [price1, price2, price3, price4]
 
-        // MARK: all add subviews using array
+        // MARK: add subviews using array
         for views in array {
 
             views.translatesAutoresizingMaskIntoConstraints = false
