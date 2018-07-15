@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		16A8AB454BEEED937181515E /* Pods_NoStoryBoard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9581B8B59AF2C430069D76B3 /* Pods_NoStoryBoard.framework */; };
+		520094E020FB94E200F6F331 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520094DF20FB94E200F6F331 /* TableViewDataSource.swift */; };
+		520094E220FBC83700F6F331 /* DataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520094E120FBC83700F6F331 /* DataSourceProtocol.swift */; };
 		520918B920DB429600943488 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520918B820DB429600943488 /* MapViewController.swift */; };
 		520918BB20DB431000943488 /* PurpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520918BA20DB431000943488 /* PurpView.swift */; };
 		5222C68E20D73B4F0023997D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5222C68D20D73B4F0023997D /* AppDelegate.swift */; };
@@ -51,6 +53,8 @@
 
 /* Begin PBXFileReference section */
 		4ED666C0B8B25C52C9FDACBE /* Pods-NoStoryBoardTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoStoryBoardTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NoStoryBoardTests/Pods-NoStoryBoardTests.debug.xcconfig"; sourceTree = "<group>"; };
+		520094DF20FB94E200F6F331 /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
+		520094E120FBC83700F6F331 /* DataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceProtocol.swift; sourceTree = "<group>"; };
 		520918B820DB429600943488 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		520918BA20DB431000943488 /* PurpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurpView.swift; sourceTree = "<group>"; };
 		5222C68A20D73B4F0023997D /* NoStoryBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NoStoryBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,15 +131,17 @@
 				520918BA20DB431000943488 /* PurpView.swift */,
 				5222C68D20D73B4F0023997D /* AppDelegate.swift */,
 				5222C68F20D73B4F0023997D /* ViewController.swift */,
+				520094DF20FB94E200F6F331 /* TableViewDataSource.swift */,
+				520094E120FBC83700F6F331 /* DataSourceProtocol.swift */,
 				5222C6B320D74B1B0023997D /* LocationManagerProcess.swift */,
 				52B902F420D7F86B006B9CA6 /* LocationServicesProtocol.swift */,
 				52B902F220D7F772006B9CA6 /* NetWorkManger.swift */,
 				527630F220DA7F5700E48A8A /* NetWorkMangerProtocol.swift */,
 				52B902F620D89569006B9CA6 /* RestaurantsModel.swift */,
+				52F1CA4920DAD72600958DFF /* BurritoTableViewCell.swift */,
 				5222C69420D73B590023997D /* Assets.xcassets */,
 				5222C69620D73B590023997D /* LaunchScreen.storyboard */,
 				5222C69920D73B590023997D /* Info.plist */,
-				52F1CA4920DAD72600958DFF /* BurritoTableViewCell.swift */,
 			);
 			path = NoStoryBoard;
 			sourceTree = "<group>";
@@ -184,6 +190,7 @@
 				5222C68820D73B4E0023997D /* Resources */,
 				52B9788F20DA09CB00E295D3 /* Embed Frameworks */,
 				8985B5523C82E2720DEE18FD /* [CP] Copy Pods Resources */,
+				52FE283E20E00FAE0027E174 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -297,6 +304,19 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		52FE283E20E00FAE0027E174 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"";
+		};
 		7260B83FD59B3F308E2CDB8C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -345,9 +365,11 @@
 				520918BB20DB431000943488 /* PurpView.swift in Sources */,
 				5222C69020D73B4F0023997D /* ViewController.swift in Sources */,
 				5222C68E20D73B4F0023997D /* AppDelegate.swift in Sources */,
+				520094E220FBC83700F6F331 /* DataSourceProtocol.swift in Sources */,
 				52B902F720D89569006B9CA6 /* RestaurantsModel.swift in Sources */,
 				520918B920DB429600943488 /* MapViewController.swift in Sources */,
 				52B902F320D7F772006B9CA6 /* NetWorkManger.swift in Sources */,
+				520094E020FB94E200F6F331 /* TableViewDataSource.swift in Sources */,
 				527630F320DA7F5700E48A8A /* NetWorkMangerProtocol.swift in Sources */,
 				5222C6B420D74B1B0023997D /* LocationManagerProcess.swift in Sources */,
 				52F1CA4A20DAD72600958DFF /* BurritoTableViewCell.swift in Sources */,

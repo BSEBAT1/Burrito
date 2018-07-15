@@ -9,77 +9,125 @@
 import UIKit
 
 class PurpView: UIView {
-    
-    var Name:UILabel=UILabel()
-    var Address:UILabel=UILabel()
-    let Price1:UIImageView=UIImageView()
-    let Price2:UIImageView=UIImageView()
-    let Price3:UIImageView=UIImageView()
-    let Price4:UIImageView=UIImageView()
-   
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    let name: UILabel = UILabel()
+
+    let address: UILabel = UILabel()
+
+    let price1: UIImageView = UIImageView()
+
+    let price2: UIImageView = UIImageView()
+
+    let price3: UIImageView = UIImageView()
+
+    let price4: UIImageView = UIImageView()
+
+    init(selection: Restaurants) {
+
+        super.init(frame: UIScreen.main.bounds)
+
         self.backgroundColor=UIColor.purple
-        Name.translatesAutoresizingMaskIntoConstraints=false
-        Address.translatesAutoresizingMaskIntoConstraints=false
-        Price1.translatesAutoresizingMaskIntoConstraints=false
-        Price2.translatesAutoresizingMaskIntoConstraints=false
-        Price3.translatesAutoresizingMaskIntoConstraints=false
-        Price4.translatesAutoresizingMaskIntoConstraints=false
-        Name.font = UIFont(name: "Futura-Medium", size:20)
-        Address.font = UIFont(name: "Futura-Medium", size:17)
-        Address.textColor=UIColor.white
-        Address.adjustsFontSizeToFitWidth=true
-        Address.numberOfLines=1
-        Address.textAlignment = .center
-        let image = UIImage.init(named:"cash2")
-        Price1.image=image
-        Price1.contentMode=UIViewContentMode.scaleAspectFit
-        Price1.clipsToBounds=true
-        
-        Price2.image=image
-        Price2.contentMode=UIViewContentMode.scaleAspectFit
-        Price2.clipsToBounds=true
-        
-        Price3.image=image
-        Price3.contentMode=UIViewContentMode.scaleAspectFit
-        Price3.clipsToBounds=true
-        
-        Price4.image=image
-        Price4.contentMode=UIViewContentMode.scaleAspectFit
-        Price4.clipsToBounds=true
-        Name.textColor = UIColor.white
-        Name.textAlignment = .center
-        
-        self.addSubview(Name)
-        self.addSubview(Address)
-        self.addSubview(Price1)
-        self.addSubview(Price2)
-        self.addSubview(Price3)
-        self.addSubview(Price4)
-        
-        let views:[String:AnyObject] = ["name":Name,"Address":Address,"price1":Price1,"price2":Price2,"price3":Price3,"price4":Price4]
-        let vertical = NSLayoutConstraint.constraints(withVisualFormat:"H:|-2-[Address]-|" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
-        let horizantal = NSLayoutConstraint.constraints(withVisualFormat:"V:|-35-[Address(25@1000)]" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
-        let imageConstraints = NSLayoutConstraint.constraints(withVisualFormat:"V:[price1(35@1000)]-5-|" , options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views)
-        let imageConstraints2 = NSLayoutConstraint.constraints(withVisualFormat:"H:|-4-[price1(25@1000)]-[price2(25@1000)]-[price3(25@1000)]-[price4(25@1000)]-[name]" , options:NSLayoutFormatOptions.alignAllCenterY, metrics:nil, views:views)
+
+        name.translatesAutoresizingMaskIntoConstraints=false
+
+        address.translatesAutoresizingMaskIntoConstraints=false
+
+        let array: [UIImageView] = [price1, price2, price3, price4]
+
+        // MARK: all add subviews using array
+        for views in array {
+
+            views.translatesAutoresizingMaskIntoConstraints = false
+
+            let image = UIImage.init(named: "cash2")
+
+            views.image = image
+
+            views.contentMode = UIViewContentMode.scaleAspectFit
+
+            views.clipsToBounds = true
+
+            self.addSubview(views)
+
+        }
+
+        if selection.priceLevel==0 {
+
+            price1.isHidden = true
+
+            price2.isHidden = true
+
+            price3.isHidden = true
+
+            price4.isHidden = true
+        } else if selection.priceLevel==1 {
+
+            price1.isHidden = true
+
+            price2.isHidden = true
+
+            price3.isHidden = true
+
+            price4.isHidden = false
+        } else if selection.priceLevel==2 {
+
+            price1.isHidden = true
+
+            price2.isHidden = true
+
+        } else if selection.priceLevel==3 {
+
+            price1.isHidden = true
+
+            price2.isHidden = true
+
+            price3.isHidden = true
+        }
+
+        name.font = UIFont(name: "Futura-Medium", size: 20)
+
+        address.font = UIFont(name: "Futura-Medium", size: 17)
+
+        address.textColor=UIColor.white
+
+        address.adjustsFontSizeToFitWidth=true
+
+        address.numberOfLines=1
+
+        address.textAlignment = .center
+
+        name.textColor = UIColor.white
+
+        name.textAlignment = .center
+
+        self.addSubview(name)
+
+        self.addSubview(address)
+
+         // swiftlint:disable:next line_length
+        let views: [String: AnyObject] = ["name": name, "Address": address, "price1": price1, "price2": price2, "price3": price4, "price4": price4]
+        // swiftlint:disable:next line_length
+        let vertical = NSLayoutConstraint.constraints(withVisualFormat: "H:|-2-[Address]-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        // swiftlint:disable:next line_length
+        let horizantal = NSLayoutConstraint.constraints(withVisualFormat: "V:|-35-[Address(25@1000)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        // swiftlint:disable:next line_length
+        let imageConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[price1(35@1000)]-5-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        // swiftlint:disable:next line_length
+        let imageConstraints2 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-4-[price1(25@1000)]-[price2(25@1000)]-[price3(25@1000)]-[price4(25@1000)]-[name]", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
 
         self.addConstraints(vertical)
+
         self.addConstraints(horizantal)
+
         self.addConstraints(imageConstraints2)
+
         self.addConstraints(imageConstraints)
+
+            return
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 
 }

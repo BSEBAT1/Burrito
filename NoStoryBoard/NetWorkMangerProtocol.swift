@@ -7,8 +7,10 @@
 //
 
 import Foundation
-protocol NetWorkManagerProtocol:AnyObject {
-    func NewLocations(Locations:NSMutableArray)
-    func DisplayError(ErrorType:String)
-    
+
+protocol NetWorkManagerProtocol: AnyObject {
+
+    func newLocations(locations: NSMutableArray)
+
+    func displayError(errorType: String)
 }

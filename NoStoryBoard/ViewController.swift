@@ -9,132 +9,112 @@
 import UIKit
 import GoogleMaps
 
-class ViewController: UIViewController,NetWorkManagerProtocol,UITableViewDelegate,UITableViewDataSource {
-    
-    var Table:UITableView!
-    
-    var Manager:NetWorkManger!
-    var RestaurantList:NSMutableArray = NSMutableArray()
-    
+class ViewController: UIViewController {
+
+    let table: UITableView = UITableView()
+
+    let manager: NetWorkManger = NetWorkManger()
+
+    let dataSource: TableViewDataSource = TableViewDataSource()
+
     override func viewDidLoad() {
+
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    self.title = "Burrito Places"
-        let LoadingBurrito:Restaurants = Restaurants(latitude:0, longitude:0, PriceLevel:0, Name:"Loading", Address: "Loading Restaurants")
-        RestaurantList.add(LoadingBurrito)
-        
-        self.Manager = NetWorkManger()
-        self.Manager.Delegate=self;
 
-        self.view.backgroundColor = UIColor.white;
-        Table = UITableView()
-        Table.translatesAutoresizingMaskIntoConstraints=false
-        Table.dataSource=self
-        Table.delegate=self
-        self.view.addSubview(Table)
-        let views:[String:AnyObject] = ["table":Table]
-        Table.rowHeight=150
-        Table.register(BurritoTableViewCell.self, forCellReuseIdentifier:"cell")
-        Table.layer.cornerRadius = 10
-        Table.layer.masksToBounds = true
-        Table.backgroundColor =  UIColor(red:0.95, green:0.95, blue:0.94, alpha:1.0)
-        let veritcal = NSLayoutConstraint.constraints(withVisualFormat:"V:|-5-[table]-0-|" , options:NSLayoutFormatOptions(rawValue: NSLayoutFormatOptions.RawValue(0)), metrics:nil, views:views)
-        let horizontal = NSLayoutConstraint.constraints(withVisualFormat:"H:|-0-[table]-0-|" , options:NSLayoutFormatOptions(rawValue: NSLayoutFormatOptions.RawValue(0)), metrics:nil, views:views)
+        self.title = "Burrito Places"
+
+        manager.delegate = dataSource
+
+        dataSource.delegate = self
+
+        self.view.backgroundColor = UIColor.white
+
+        table.translatesAutoresizingMaskIntoConstraints=false
+
+        table.dataSource = dataSource
+
+        table.delegate = self
+
+        self.view.addSubview(table)
+
+        let views: [String: AnyObject] = ["table": table]
+
+        table.rowHeight=150
+
+        table.register(BurritoTableViewCell.self, forCellReuseIdentifier: "cell")
+
+        table.layer.cornerRadius = 10
+
+        table.layer.masksToBounds = true
+
+    table.backgroundColor =  UIColor(red: 0.95, green: 0.95, blue: 0.94, alpha: 1.0)
+
+        // swiftlint:disable:next line_length
+        let veritcal = NSLayoutConstraint.constraints(withVisualFormat: "V:|-5-[table]-0-|", options: NSLayoutFormatOptions(rawValue: NSLayoutFormatOptions.RawValue(0)), metrics: nil, views: views)
+        // swiftlint:disable:next line_length
+        let horizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[table]-0-|", options: NSLayoutFormatOptions(rawValue: NSLayoutFormatOptions.RawValue(0)), metrics: nil, views: views)
+
         self.view.addConstraints(veritcal)
-        self.view.addConstraints(horizontal)
-        
-    }
-  
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        self.view.addConstraints(horizontal)
+
     }
-    
-  
-    func NewLocations(Locations: NSMutableArray) {
-        DispatchQueue.main.async {
-            self.RestaurantList = Locations
-            self.Table.reloadData()
-        }
-    }
-    
-    func DisplayError(ErrorType: String) {
-        let alert = UIAlertController(title: "Alert", message:ErrorType, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in }))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
+
+}
+
+extension ViewController: UITableViewDelegate {
+
     // MARK: - Table View delegate methods
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.RestaurantList.count
+        return dataSource.restaurantList.count
     }
-    
-    // There is just one row in every section
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
+
     // Set the spacing between sections
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 15
     }
-    
+
     // Make the background color show through
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.clear
         return headerView
     }
-    
-    // create a cell for each table view row
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-//        let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell!
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! BurritoTableViewCell
-        let Restaurant:Restaurants = RestaurantList.object(at: indexPath.section) as! Restaurants
-        cell.Name.text=Restaurant.Name
-        cell.Address.text=Restaurant.Address
-        cell.latitude=Restaurant.latitude
-        cell.longitude=Restaurant.longitude
-        if Restaurant.PriceLevel==0 {
-            cell.Price1.isHidden=true;
-            cell.Price2.isHidden=true;
-            cell.Price3.isHidden=true;
-            cell.Price4.isHidden=true;
-        } else if Restaurant.PriceLevel==1 {
-            cell.Price2.isHidden=true;
-            cell.Price3.isHidden=true;
-            cell.Price4.isHidden=true;
-        } else if Restaurant.PriceLevel==2 {
-            cell.Price3.isHidden=true;
-            cell.Price4.isHidden=true;
-        }  else if Restaurant.PriceLevel==3 {
-            cell.Price4.isHidden=true;
-        }
-        
-        // add border and color
-        cell.backgroundColor = UIColor.white
-        cell.layer.borderWidth = 0
-        cell.layer.cornerRadius = 20
-        cell.clipsToBounds = true
-        
-        return cell
-    }
-    
+
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // note that indexPath.section is used rather than indexPath.row
-        print("You tapped cell number \(indexPath.section).")
-        
-        let Restaurant:Restaurants = RestaurantList[indexPath.section] as! Restaurants;
-        let MapViewd:MapViewController = MapViewController()
-        MapViewd.SelectedRestaurant = Restaurant
-        MapViewd.title=Restaurant.Name
-        self.navigationController?.pushViewController(MapViewd, animated:false)
+
+        let restaurant: Restaurants? = dataSource.restaurantList[indexPath.section] as? Restaurants
+        if let selected = restaurant {
+            let mapViewd: MapViewController = MapViewController(selectedRestaurantOut: selected)
+            self.navigationController?.pushViewController(mapViewd, animated: false)
+        }
+
     }
 }
 
+//Mark DataSource Protocol
+extension ViewController: DataSourceProtocol {
 
+    func updateTableView() {
+        DispatchQueue.main.async {
 
+            self.table.reloadData()
+        }
+    }
+
+    func errorRetrievingData(errorDisplay: String) {
+
+        let alertController = UIAlertController(title: "Error", message: errorDisplay, preferredStyle: .alert)
+
+        let alertAction = UIAlertAction( title: "OK" ,
+                                         style: .destructive) { action in
+                                            print("action triggered \(String(describing: action.title)))")
+        }
+
+        alertController.addAction(alertAction)
+        self.present(alertController, animated: false, completion: nil)
+    }
+
+}

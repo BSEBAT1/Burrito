@@ -8,8 +8,9 @@
 
 import Foundation
 
-protocol LocationServices:AnyObject {
-    func NewLocation(lat:Double,long:Double)
-    func ErrorEncountered(ErrorType:String)
-    
+protocol LocationServices: AnyObject {
+
+    func newLocation(lat: Double, long: Double)
+
+    func errorEncountered(errorType: String)
 }

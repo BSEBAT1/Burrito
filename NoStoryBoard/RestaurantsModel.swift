@@ -9,10 +9,10 @@
 import Foundation
 
 struct Restaurants {
- 
-    var latitude:Double!
-    var longitude:Double!
-    var PriceLevel:Int!
-    var Name:String!
-    var Address:String!
+
+    let latitude: Double
+    let longitude: Double
+    let priceLevel: Int
+    let name: String
+    let address: String
 }
