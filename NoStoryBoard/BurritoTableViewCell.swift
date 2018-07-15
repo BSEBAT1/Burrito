@@ -30,11 +30,7 @@ class BurritoTableViewCell: UITableViewCell {
 
     var priceLevel: Int = Int()
 
-    var currentRestaurant: Restaurants
-
     func setup(selected: Restaurants) {
-
-        currentRestaurant = selected
 
         name.text = selected.name
 
