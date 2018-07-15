@@ -18,10 +18,10 @@ class TableViewDataSource: NSObject, UITableViewDataSource, NetWorkManagerProtoc
 
         // swiftlint:disable:next line_length
         let loadingBurrito: Restaurants = Restaurants(latitude: 0, longitude: 0, priceLevel: 0, name: "Loading", address: "Loading Restaurants")
+
         restaurantList.add(loadingBurrito)
-
     }
-
+    // MARK: TableView Data Source Delegate Functions
     // There is just one row in every section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1

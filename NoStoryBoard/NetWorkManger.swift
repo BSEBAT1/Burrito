@@ -38,7 +38,6 @@ class NetWorkManger: NSObject, LocationServices {
     func googlePlacesOperation(lat: Double, long: Double) {
 
         // swiftlint:disable:next line_length
-
         let json = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\(lat),\(long)&radius=1500&type=restaurant&keyword=burrito&key=AIzaSyCrEWb1Hsk1hNj_rLsUF_ML6Z-_4fy4yfo"
 
         guard let url = URL(string: json) else {
