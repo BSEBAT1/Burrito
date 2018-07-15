@@ -149,7 +149,15 @@ class BurritoTableViewCell: UITableViewCell {
         self.addConstraints(imageConstraints)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func prepareForReuse() {
+
+        let array: [UIImageView] = [price1, price2, price3, price4]
+
+        for views in array {
+
+            views.isHidden = false
+
+        }
+
     }
 }
